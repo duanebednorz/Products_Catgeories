@@ -71,6 +71,12 @@ public class PCService {
 		this.categoryRepo.deleteById(id);
 	}
 	
+	public List<Category> findUsedCat(Product products){
+		return this.categoryRepo.findByProductsNotContains(products);
+	}
 	
+	public List<Product> findUsedProd(Category categories){
+		return this.productRepo.findByCategoriesNotContains(categories);
+	}
 	
 };

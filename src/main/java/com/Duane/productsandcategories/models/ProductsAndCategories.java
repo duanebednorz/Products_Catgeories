@@ -46,13 +46,13 @@ public class ProductsAndCategories {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="category_id")
-    private Category category;
+    private Category categories;
 //   ************************************
     public ProductsAndCategories () {}
     
-    public ProductsAndCategories (Product products, Category category) {
+    public ProductsAndCategories (Product products, Category categories) {
     	this.products = products;
-    	this.category = category;
+    	this.categories = categories;
     }
     
 
@@ -81,11 +81,11 @@ public class ProductsAndCategories {
 	}
 
 	public Category getCategory() {
-		return category;
+		return categories;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategory(Category categories) {
+		this.categories = categories;
 	}
 
 	public Product getProducts() {

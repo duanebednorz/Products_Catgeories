@@ -36,7 +36,7 @@ private PCService pcServ;
 	public String viewOneProduct(@PathVariable("id") Long id, Model model) {
 		Product myProduct = this.pcServ.findProduct(id);
     	model.addAttribute("product", myProduct);
-    	model.addAttribute("allCategories", pcServ.getAllCategories());
+    	model.addAttribute("allCategories", pcServ.findUsedCat(this.pcServ.findProduct(id)));
 		return "ViewOneProduct.jsp";
 	}
 //	******View One Product view************
@@ -44,7 +44,7 @@ private PCService pcServ;
 	public String viewOneCategory(@PathVariable("id") Long id, Model model) {
 		Category myCategory = this.pcServ.findCategory(id);
     	model.addAttribute("thisCategory", myCategory);
-    	model.addAttribute("allProducts", pcServ.getAllProducts());
+    	model.addAttribute("allProducts", pcServ.findUsedProd(this.pcServ.findCategory(id)));
 		return "ViewOneCategory.jsp";
 	}
 
@@ -103,9 +103,11 @@ private PCService pcServ;
 		
 		ProductsAndCategories pc = new ProductsAndCategories(p, c);
 		
+		if(!p.getCategories().contains(c)) {
 		pcServ.saveRelationship(pc);
+		}
 		
-		return "redirect:/dashboard";
+		return "redirect:/addCategory";
 	}
 	
 	@PostMapping("/addProduct")
@@ -117,9 +119,12 @@ private PCService pcServ;
 		
 		ProductsAndCategories pc = new ProductsAndCategories(p, c);
 		
-		pcServ.saveRelationship(pc);
+		if(!p.getCategories().contains(c)) {
+			pcServ.saveRelationship(pc);
+		}
 		
-		return "redirect:/dashboard";
+		
+		return "redirect:/addProduct";
 	}
 	
 	
